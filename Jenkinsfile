@@ -2,62 +2,81 @@ pipeline {
 
     agent any
 
-    
-
-    parameters {
-
-        choice(name: 'ENVIRONMENT', choices: ['Production', 'Development', 'Test'], description: 'Select the environment')
-
-    }
-
 
     stages {
 
-        stage('Production') {
-
-            when {
-
-                expression { params.ENVIRONMENT == 'Production' }
-
-            }
+        stage('Input Environment') {
 
             steps {
 
-                echo 'Code Deployed in Production environment!'
+                script {
+
+                    env.SELECTED_ENV = input(
+
+                        id: 'EnvironmentInput', 
+
+                        message: 'Select the environment to proceed', 
+
+                        parameters: [
+
+                            choice(name: 'ENVIRONMENT', choices: ['Production', 'Development', 'Test'], description: 'Choose the environment')
+
+                        ]
+
+                    )
+
+                }
 
             }
 
         }
 
 
-        stage('Development') {
+        stage('Production Environment') {
 
             when {
 
-                expression { params.ENVIRONMENT == 'Development' }
+                expression { env.SELECTED_ENV == 'Production' }
 
             }
 
             steps {
 
-                echo 'Code Deployed in Development environment!'
+                echo 'You have selected the Production environment!'
 
             }
 
         }
 
 
-        stage('Testing') {
+        stage('Development Environment') {
 
             when {
 
-                expression { params.ENVIRONMENT == 'Test' }
+                expression { env.SELECTED_ENV == 'Development' }
 
             }
 
             steps {
 
-                echo 'Code Deployed in Test environment!'
+                echo 'You have selected the Development environment!'
+
+            }
+
+        }
+
+
+        stage('Test Environment') {
+
+            when {
+
+                expression { env.SELECTED_ENV == 'Test' }
+
+            }
+
+            steps {
+
+                echo 'You have selected the Test environment!'
 
             }
 
