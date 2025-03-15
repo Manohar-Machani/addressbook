@@ -1,87 +1,30 @@
 pipeline {
-
-    agent any
-
-
+   agent none
+   tools{
+//     jdk "myjava"
+        maven "mymaven"
+   }
     stages {
-
-        stage('Input Environment') {
-
+        stage('Compile') { //prod
+        agent any
             steps {
-
-                script {
-
-                    env.SELECTED_ENV = input(
-
-                        id: 'EnvironmentInput', 
-
-                        message: 'Select the environment to proceed', 
-
-                        parameters: [
-
-                            choice(name: 'ENVIRONMENT', choices: ['Production', 'Development', 'Test'], description: 'Choose the environment')
-
-                        ]
-
-                    )
-
-                }
-
+                echo "Compile the code"
+                sh "mvn compile"
             }
-
         }
-
-
-        stage('Production Environment') {
-
-            when {
-
-                expression { env.SELECTED_ENV == 'Production' }
-
-            }
-
+         stage('UnitTest') { //test
+         agent any
             steps {
-
-                echo 'You have selected the Production environment!'
-
+                echo "Test the code"
+                sh "mvn test"
             }
-
         }
-
-
-        stage('Development Environment') {
-
-            when {
-
-                expression { env.SELECTED_ENV == 'Development' }
-
-            }
-
+         stage('Package') {//dev
+        agent {label 'linux_slave'}
             steps {
-
-                echo 'You have selected the Development environment!'
-
+                echo "Package the code"
+                sh "mvn package"
             }
-
         }
-
-
-        stage('Test Environment') {
-
-            when {
-
-                expression { env.SELECTED_ENV == 'Test' }
-
-            }
-
-            steps {
-
-                echo 'You have selected the Test environment!'
-
-            }
-
-        }
-
     }
-
 }
