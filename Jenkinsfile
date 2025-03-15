@@ -26,7 +26,7 @@ pipeline {
          agent any
           steps {
                 script {
-                sshagent (['Slave_2']) {
+                sshagent (['Slave2']) {
                     echo "Package the code"
                     sh "scp -o StrictHostKeyChecking=no server-script.sh ${slave2_ip}: /home/ec2-user"
                     sh "ssh -o StrictHostKeyChecking=no ${slave2_ip} 'bash ~/server-script.sh'"
