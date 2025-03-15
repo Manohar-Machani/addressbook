@@ -25,11 +25,12 @@ pipeline {
          stage('Package') {//salve2
           steps {
                 script {
-                sshagent (['Slave_2']){
-                echo "Package the code"
-                sh "scp -o StrictHostKeyChecking=no server-script.sh ${slave2_ip"}: /home/ec2-user"
-                sh "ssh -o StrictHostKeyChecking=no ${slave2_ip"} 'bash ~/server-script.sh"
-                    }
+                sshagent (['Slave_2']) {
+                    echo "Package the code"
+                    sh "scp -o StrictHostKeyChecking=no server-script.sh ${slave2_ip}: /home/ec2-user"
+                    sh "ssh -o StrictHostKeyChecking=no ${slave2_ip} 'bash ~/server-script.sh'"
+                }
+
                 }
             }
         }
