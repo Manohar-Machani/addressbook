@@ -2,7 +2,7 @@ pipeline {
    agent none
    tools{
 //     jdk "myjava"
-  //    maven "mymaven"
+      maven "mymaven"
    }
     stages {
         stage('Compile') { //master
