@@ -23,6 +23,7 @@ pipeline {
             }
         }
          stage('Package') {//salve2
+         agent any
           steps {
                 script {
                 sshagent (['Slave_2']) {
