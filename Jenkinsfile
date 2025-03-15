@@ -5,7 +5,7 @@ pipeline {
       maven "mymaven"
    }
    environment {
-   Slave2_ip='ec2_user@172.31.15.21'
+   slave2_ip='ec2_user@172.31.15.21'
    }
     stages {
         stage('Compile') { //master
