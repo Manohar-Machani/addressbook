@@ -23,7 +23,7 @@ pipeline {
         agent any
             steps {
                 echo "Package the code"
-                sh "mvn package"
+                //sh "mvn package"
             }
         }
     }
