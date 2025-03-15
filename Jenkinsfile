@@ -4,6 +4,9 @@ pipeline {
 //     jdk "myjava"
       maven "mymaven"
    }
+   environment {
+   Slave2_ip='ec2_user@172.31.15.21'
+   }
     stages {
         stage('Compile') { //master
         agent any
@@ -22,8 +25,13 @@ pipeline {
          stage('Package') {//master
         agent any
             steps {
+                script {
+                sshagent (['Package Server']){
                 echo "Package the code"
-                sh "mvn package"
+                sh "scp -o StrictHostKeyChecking=no server-script.sh ${slave2_ip"}:/home/ec2-user"
+                sh "ssh -o StrictHostKeyChecking=no ${slave2_ip"} 'bash ~/server-script.sh"
+                    }
+                }
             }
         }
     }
