@@ -22,7 +22,7 @@ pipeline {
             }
         }
         stage('Package') {
-            agent any  // Ensure Slave_2 is configured in Jenkins
+            agent any  
             steps {
                 script {
                     sshagent (credentials: ['Slave2']) {  // Ensure this matches Jenkins credentials ID
