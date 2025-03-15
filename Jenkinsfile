@@ -22,9 +22,8 @@ pipeline {
                 sh "mvn test"
             }
         }
-         stage('Package') {//master
-        agent any
-            steps {
+         stage('Package') {//salve2
+          steps {
                 script {
                 sshagent (['Slave_2']){
                 echo "Package the code"
